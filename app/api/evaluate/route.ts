@@ -69,15 +69,15 @@ export async function POST(request: Request) {
       { role: "system", content: EVALUATION_SYSTEM_PROMPT },
       {
         role: "user",
-        content: `Here are the user's questionnaire responses:\n\n${userContent}`,
+        content: `The dentist completed the following questionnaire. Write your mentor-style professional advice based solely on these responses:\n\n${userContent}`,
       },
     ]);
 
     return NextResponse.json({
       reply,
-      headline: "Your personalized pathway overview",
+      headline: "Mentor guidance based on your responses",
       subline:
-        "This preview is generated from your answers. Full evaluation and onboarding features will unlock in the product.",
+        "Tailored to your questionnaire answers. Verify critical decisions (legal, visa, licensing) with qualified professionals and official sources.",
     });
   } catch (e) {
     const message = e instanceof Error ? e.message : "Evaluation failed";

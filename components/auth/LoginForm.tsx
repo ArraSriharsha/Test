@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { safeNextPath } from "@/lib/demo-auth";
+import { EyeSlashIcon, EyeIcon } from "@heroicons/react/20/solid";
 
 type LoginFormProps = {
   onSignUp?: () => void;
@@ -14,6 +15,11 @@ export function LoginForm({ onSignUp, defaultNext }: LoginFormProps) {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  function togglePasswordVisibility() {
+    setShowPassword(!showPassword);
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -125,7 +131,7 @@ export function LoginForm({ onSignUp, defaultNext }: LoginFormProps) {
             </svg>
           </div>
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             name="password"
             autoComplete="current-password"
             placeholder="Password"
@@ -133,22 +139,15 @@ export function LoginForm({ onSignUp, defaultNext }: LoginFormProps) {
           />
           <button
             type="button"
-            className="absolute inset-y-0 right-0 flex items-center pr-3 text-[#6E7881] lg:pr-4"
+            className="absolute inset-y-0 right-0 onClick={togglePasswordVisibility} flex items-center pr-3 text-[#6E7881] lg:pr-4"
             aria-label="Toggle password visibility"
+            onClick={togglePasswordVisibility}
           >
-            <svg
-              className="h-4 w-4 lg:h-5 lg:w-5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              viewBox="0 0 24 24"
-              aria-hidden
-            >
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-              <circle cx="12" cy="12" r="3" />
-            </svg>
+            {showPassword ? (
+              <EyeSlashIcon className="h-4 w-4 lg:h-5 lg:w-5" />
+            ) : (
+              <EyeIcon className="h-4 w-4 lg:h-5 lg:w-5" />
+            )}
           </button>
         </div>
 

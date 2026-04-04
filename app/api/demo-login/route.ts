@@ -21,12 +21,18 @@ export async function POST(request: Request) {
     password?: string;
   };
 
-  const expectedUser = process.env.DEMO_USERNAME;
-  const expectedPass = process.env.DEMO_PASSWORD;
+  const isProd = process.env.NODE_ENV === "production";
+  const expectedUser =
+    process.env.DEMO_USERNAME ?? (!isProd ? "dentnav@gmail.com" : undefined);
+  const expectedPass =
+    process.env.DEMO_PASSWORD ?? (!isProd ? "dentnav" : undefined);
 
   if (!expectedUser || !expectedPass) {
     return NextResponse.json(
-      { error: "Demo auth is not configured (set DEMO_USERNAME and DEMO_PASSWORD)" },
+      {
+        error:
+          "Demo auth is not configured. Set DEMO_USERNAME and DEMO_PASSWORD in .env.local (see .env.example).",
+      },
       { status: 503 },
     );
   }
