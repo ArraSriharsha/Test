@@ -1,27 +1,21 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import { BrandLogo } from "@/components/landing/BrandLogo";
 import { getQuestionnaire } from "@/lib/questionnaire-loader";
-import type { AnswerValue, Question } from "@/lib/questionnaire.types";
+import type { AnswerValue } from "@/lib/questionnaire.types";
+import { allQuestionsAnswered, isAnswerComplete } from "@/lib/questionnaire-validation";
+import { EVAL_RESULT_STORAGE_KEY } from "@/lib/results-storage";
 import { QuestionnaireField } from "./QuestionnaireField";
 
-function isAnswerComplete(q: Question, val: AnswerValue | undefined): boolean {
-  if (val === undefined) return false;
-  if (q.type === "multiSelect") {
-    if (!Array.isArray(val)) return false;
-    const min = q.minSelections ?? 1;
-    const max = q.maxSelections ?? Infinity;
-    return val.length >= min && val.length <= max;
-  }
-  if (typeof val === "string") return val.trim().length > 0;
-  return false;
-}
-
 export function QuestionnaireView() {
+  const router = useRouter();
   const doc = useMemo(() => getQuestionnaire(), []);
   const [answers, setAnswers] = useState<Record<string, AnswerValue>>({});
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
   const setAnswer = useCallback((id: string, v: AnswerValue) => {
     setAnswers((prev) => ({ ...prev, [id]: v }));
@@ -34,10 +28,57 @@ export function QuestionnaireView() {
   );
   const progressPct = total > 0 ? Math.round((filled / total) * 100) : 0;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  async function logout() {
+    await fetch("/api/demo-logout", { method: "POST", credentials: "include" });
+    router.push("/");
+    router.refresh();
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    console.log("questionnaire_submit", answers);
-  };
+    setSubmitError(null);
+    if (!allQuestionsAnswered(doc.questions, answers)) {
+      setSubmitError("Please complete every question before viewing results.");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/evaluate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ questionnaireId: doc.id, answers }),
+      });
+      const data = (await res.json().catch(() => ({}))) as {
+        error?: string;
+        reply?: string;
+        headline?: string;
+        subline?: string;
+      };
+      if (!res.ok) {
+        setSubmitError(data.error ?? "Could not generate results. Try again.");
+        return;
+      }
+      if (typeof data.reply !== "string") {
+        setSubmitError("Invalid response from server.");
+        return;
+      }
+      sessionStorage.setItem(
+        EVAL_RESULT_STORAGE_KEY,
+        JSON.stringify({
+          headline: data.headline,
+          subline: data.subline,
+          reply: data.reply,
+          at: Date.now(),
+        }),
+      );
+      router.push("/results");
+    } catch {
+      setSubmitError("Network error. Check your connection and try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   return (
     <div className="relative isolate z-0 mx-auto flex min-h-dvh w-full max-w-[1440px] flex-col items-start justify-between bg-[radial-gradient(129.64%_129.64%_at_-4116.67%_-4116.67%,rgba(125,211,252,0.15)_1.61%,rgba(125,211,252,0)_1.61%)] pb-px font-display">
@@ -48,12 +89,13 @@ export function QuestionnaireView() {
         <div className="flex h-[50px] w-full items-center justify-between px-7 py-2.5">
           <BrandLogo compact className="min-w-0 shrink-0" textClassName="font-bold text-[#1B3A5C]" />
           <div className="flex items-center gap-4">
-            <Link
-              href="/auth/login"
-              className="text-xs font-semibold leading-[18px] text-slate-500 transition-colors hover:text-slate-700"
+            <button
+              type="button"
+              onClick={() => void logout()}
+              className="text-xs font-semibold leading-[18px] text-slate-500 transition-colors hover:text-slate-800"
             >
-              Sign In
-            </Link>
+              Log out
+            </button>
             <Link
               href="/questionnaire"
               className="flex cursor-pointer flex-col items-center justify-center rounded-full bg-sky-500 px-4 py-1.5 text-xs font-bold leading-[18px] text-white no-underline transition-opacity hover:opacity-90"
@@ -89,6 +131,14 @@ export function QuestionnaireView() {
           ))}
 
           <div className="flex w-full flex-col items-center gap-4 border-t border-slate-50 pt-4">
+            {submitError ? (
+              <p
+                className="w-full max-w-sm rounded-lg bg-red-50 px-3 py-2 text-center text-xs font-semibold text-red-700"
+                role="alert"
+              >
+                {submitError}
+              </p>
+            ) : null}
             <div className="flex items-center gap-1.5 text-[10px] font-medium text-slate-400">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <path
@@ -103,9 +153,10 @@ export function QuestionnaireView() {
             </div>
             <button
               type="submit"
-              className="flex h-12 w-full max-w-sm cursor-pointer items-center justify-center rounded-full border-0 bg-sky-500 text-base font-extrabold text-white shadow-[0_10px_15px_-3px_rgba(14,165,233,0.2),0_4px_6px_-4px_rgba(14,165,233,0.2)] transition-all hover:bg-sky-600 active:scale-[0.98]"
+              disabled={submitting}
+              className="flex h-12 w-full max-w-sm cursor-pointer items-center justify-center rounded-full border-0 bg-sky-500 text-base font-extrabold text-white shadow-[0_10px_15px_-3px_rgba(14,165,233,0.2),0_4px_6px_-4px_rgba(14,165,233,0.2)] transition-all hover:bg-sky-600 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
             >
-              See My Results
+              {submitting ? "Generating your overview…" : "See My Results"}
             </button>
           </div>
         </form>

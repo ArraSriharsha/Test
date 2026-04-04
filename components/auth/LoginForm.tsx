@@ -1,12 +1,50 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { safeNextPath } from "@/lib/demo-auth";
 
 type LoginFormProps = {
   onSignUp?: () => void;
+  defaultNext?: string;
 };
 
-export function LoginForm({ onSignUp }: LoginFormProps) {
+export function LoginForm({ onSignUp, defaultNext }: LoginFormProps) {
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError(null);
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+    const username = String(fd.get("email") ?? "").trim();
+    const password = String(fd.get("password") ?? "");
+
+    setLoading(true);
+    try {
+      const res = await fetch("/api/demo-login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ username, password }),
+      });
+      const data = (await res.json().catch(() => ({}))) as { error?: string };
+      if (!res.ok) {
+        setError(data.error ?? "Could not sign in");
+        return;
+      }
+      router.push(safeNextPath(defaultNext));
+      router.refresh();
+    } catch {
+      setError("Network error. Try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <>
       {/* Social Auth */}
@@ -44,7 +82,7 @@ export function LoginForm({ onSignUp }: LoginFormProps) {
         <div className="flex-grow border-t border-[#BEC8D2]/30" />
       </div>
 
-      <form className="space-y-3 lg:space-y-4" onSubmit={(e) => e.preventDefault()}>
+      <form className="space-y-3 lg:space-y-4" onSubmit={handleSubmit}>
         <div className="relative">
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-[#6E7881] lg:pl-4">
             <svg
@@ -65,7 +103,7 @@ export function LoginForm({ onSignUp }: LoginFormProps) {
             type="email"
             name="email"
             autoComplete="email"
-            placeholder="Email Address"
+            placeholder="Demo username (email)"
             className="w-full rounded-xl border border-[#BEC8D2] bg-[#F8F9FF] py-2.5 pl-11 pr-3 text-sm font-medium text-[#3E4850] placeholder:text-[#6E7881]/60 transition-colors focus:border-[#0EA5E9] focus:outline-none lg:py-3 lg:pl-12 lg:pr-4"
           />
         </div>
@@ -133,11 +171,18 @@ export function LoginForm({ onSignUp }: LoginFormProps) {
           </Link>
         </div>
 
+        {error ? (
+          <p className="rounded-lg bg-red-50 px-3 py-2 text-center text-xs font-semibold text-red-700" role="alert">
+            {error}
+          </p>
+        ) : null}
+
         <button
           type="submit"
-          className="w-full rounded-full bg-[#0EA5E9] py-2.5 text-sm font-bold text-white shadow-[0_4px_16px_rgba(0,101,145,0.25)] transition-all hover:bg-[#0284C7] hover:shadow-[0_6px_20px_rgba(0,101,145,0.3)] active:scale-[0.98] lg:py-3"
+          disabled={loading}
+          className="w-full rounded-full bg-[#0EA5E9] py-2.5 text-sm font-bold text-white shadow-[0_4px_16px_rgba(0,101,145,0.25)] transition-all hover:bg-[#0284C7] hover:shadow-[0_6px_20px_rgba(0,101,145,0.3)] active:scale-[0.98] disabled:opacity-60 lg:py-3"
         >
-          Login
+          {loading ? "Signing in…" : "Login"}
         </button>
       </form>
 

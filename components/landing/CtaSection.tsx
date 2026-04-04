@@ -24,7 +24,7 @@ export function CtaSection() {
           </p>
           <div className="flex w-full flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
-              href="/questionnaire"
+              href="/auth/login?next=/questionnaire"
               className="relative isolate inline-flex items-center justify-center rounded-full bg-[linear-gradient(99.11deg,#006591_0%,#0EA5E9_100%)] px-10 py-5 text-base font-bold leading-6 text-white shadow-[0_20px_25px_-5px_rgba(0,101,145,0.25),0_8px_10px_-6px_rgba(0,101,145,0.2)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_25px_30px_-5px_rgba(0,101,145,0.25)] active:scale-[0.98]"
             >
               Unlock Your Custom Plan

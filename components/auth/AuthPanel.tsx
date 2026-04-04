@@ -4,7 +4,7 @@ import { useState } from "react";
 import { LoginForm } from "@/components/auth/LoginForm";
 import { SignupForm } from "@/components/auth/SignupForm";
 
-export function AuthPanel() {
+export function AuthPanel({ defaultNext }: { defaultNext?: string }) {
   const [mode, setMode] = useState<"login" | "signup">("login");
 
   return (
@@ -31,8 +31,8 @@ export function AuthPanel() {
         )}
       </div>
 
-      {mode === "login" ? (
-        <LoginForm onSignUp={() => setMode("signup")} />
+        {mode === "login" ? (
+        <LoginForm onSignUp={() => setMode("signup")} defaultNext={defaultNext} />
       ) : (
         <SignupForm onSignIn={() => setMode("login")} />
       )}
