@@ -211,7 +211,7 @@ export function HeroSection() {
             <div className="max-w-[530px] pt-8">
               <div className="flex flex-col gap-[11px] pt-4">
                 <Link
-                  href="/questionnaire"
+                  href="/auth/login?next=/questionnaire"
                   className="group relative isolate inline-flex w-full items-center justify-center gap-2 rounded-full bg-[linear-gradient(98.5deg,#006591_0%,#0EA5E9_100%)] px-8 py-5 text-lg font-bold leading-7 text-white shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_25px_30px_-5px_rgba(0,0,0,0.15),0_12px_15px_-6px_rgba(0,0,0,0.1)] active:scale-[0.98]"
                 >
                   Start Your Journey Today

@@ -2,8 +2,14 @@ import Link from "next/link";
 import { AuthPanel } from "@/components/auth/AuthPanel";
 import Particles from "@/components/auth/Particles";
 
-export default function LoginPage() {
-    return (
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ next?: string }>;
+}) {
+  const { next } = await searchParams;
+
+  return (
         <main className="flex h-[100dvh] max-h-[100dvh] w-full flex-col overflow-hidden bg-white lg:flex-row">
             {/* Left Panel — 55% width on desktop */}
             <section
@@ -107,17 +113,19 @@ export default function LoginPage() {
 
                 {/* Form Container */}
                 <div className="flex w-full max-w-[400px] min-h-0 flex-1 flex-col justify-center gap-5 py-2 lg:gap-6">
-                    <AuthPanel />
+                    <AuthPanel defaultNext={next} />
                 </div>
 
                 {/* Security Footnote */}
-                <div className="flex w-full max-w-[400px] shrink-0 items-center justify-center gap-2 border-t border-[#E6EEFF] pt-3">
-                    <svg className="h-3.5 w-3.5 shrink-0 text-[#006E2F]" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                        <path d="M12 2C9.243 2 7 4.243 7 7V10C5.897 10 5 10.897 5 12V20C5 21.103 5.897 22 7 22H17C18.103 22 19 21.103 19 20V12C19 10.897 18.103 10 17 10V7C17 4.243 14.757 2 12 2ZM9 7C9 5.346 10.346 4 12 4C13.654 4 15 5.346 15 7V10H9V7ZM12 18C10.897 18 10 17.103 10 16C10 14.897 10.897 14 12 14C13.103 14 14 14.897 14 16C14 17.103 13.103 18 12 18Z" />
-                    </svg>
-                    <span className="text-[10px] font-bold uppercase tracking-[0.8px] text-[#6E7881] lg:text-[11px]">
-                        PROTECTED BY GOOGLE OAUTH 2.0 AND JWT
-                    </span>
+                <div className="flex w-full max-w-[400px] shrink-0 flex-col items-center gap-1 border-t border-[#E6EEFF] pt-3">
+                    <div className="flex items-center justify-center gap-2">
+                        <svg className="h-3.5 w-3.5 shrink-0 text-[#006E2F]" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                            <path d="M12 2C9.243 2 7 4.243 7 7V10C5.897 10 5 10.897 5 12V20C5 21.103 5.897 22 7 22H17C18.103 22 19 21.103 19 20V12C19 10.897 18.103 10 17 10V7C17 4.243 14.757 2 12 2ZM9 7C9 5.346 10.346 4 12 4C13.654 4 15 5.346 15 7V10H9V7ZM12 18C10.897 18 10 17.103 10 16C10 14.897 10.897 14 12 14C13.103 14 14 14.897 14 16C14 17.103 13.103 18 12 18Z" />
+                        </svg>
+                        <span className="text-[10px] font-bold uppercase tracking-[0.8px] text-[#6E7881] lg:text-[11px]">
+                            DEMO: HTTP-ONLY SESSION · QUESTIONNAIRE VIA GROQ
+                        </span>
+                    </div>
                 </div>
             </section>
         </main>
