@@ -11,9 +11,11 @@ type Props = {
   question: Question;
   value: AnswerValue | undefined;
   onChange: (id: string, v: AnswerValue) => void;
+  fieldError?: string;
+  onBlurField?: (id: string) => void;
 };
 
-export function QuestionnaireField({ question, value, onChange }: Props) {
+export function QuestionnaireField({ question, value, onChange, fieldError, onBlurField }: Props) {
   switch (question.type) {
     case "textarea":
       return (
@@ -21,6 +23,8 @@ export function QuestionnaireField({ question, value, onChange }: Props) {
           question={question}
           value={typeof value === "string" ? value : ""}
           onChange={(v) => onChange(question.id, v)}
+          error={fieldError}
+          onBlurField={onBlurField ? () => onBlurField(question.id) : undefined}
         />
       );
     case "dropdown":

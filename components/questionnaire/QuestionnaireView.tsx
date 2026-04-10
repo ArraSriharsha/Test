@@ -2,11 +2,15 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { BrandLogo } from "@/components/landing/BrandLogo";
-import { getQuestionnaire } from "@/lib/questionnaire-loader";
-import type { AnswerValue, Question } from "@/lib/questionnaire.types";
+import { fetchQuestionnaire } from "@/lib/questionnaire-loader";
+import type { AnswerValue, Question, QuestionnaireDocument } from "@/lib/questionnaire.types";
+import { getApiBaseUrl } from "@/lib/api";
+import { validateQ1DegreeBackground } from "@/lib/questionnaire-validation";
 import { QuestionnaireField } from "./QuestionnaireField";
+
+const Q1_ID = "q1-degree-background";
 
 function isAnswerComplete(q: Question, val: AnswerValue | undefined): boolean {
   if (val === undefined) return false;
@@ -16,29 +20,79 @@ function isAnswerComplete(q: Question, val: AnswerValue | undefined): boolean {
     const max = q.maxSelections ?? Infinity;
     return val.length >= min && val.length <= max;
   }
-  if (typeof val === "string") return val.trim().length > 0;
+  if (typeof val === "string") {
+    const s = val.trim();
+    if (s.length === 0) return false;
+    if (q.id === Q1_ID && validateQ1DegreeBackground(val)) return false;
+    return true;
+  }
   return false;
 }
 
 export function QuestionnaireView() {
   const router = useRouter();
-  const doc = useMemo(() => getQuestionnaire(), []);
+  const [doc, setDoc] = useState<QuestionnaireDocument | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
   const [answers, setAnswers] = useState<Record<string, AnswerValue>>({});
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchQuestionnaire()
+      .then((d) => {
+        if (!cancelled) setDoc(d);
+      })
+      .catch(() => {
+        if (!cancelled) setLoadError("Could not load questionnaire.");
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const setAnswer = useCallback((id: string, v: AnswerValue) => {
     setAnswers((prev) => ({ ...prev, [id]: v }));
   }, []);
 
-  const total = doc.questions.length;
-  const filled = useMemo(
-    () => doc.questions.filter((q) => isAnswerComplete(q, answers[q.id])).length,
-    [doc.questions, answers],
-  );
+  const total = doc?.questions.length ?? 0;
+  const filled = useMemo(() => {
+    if (!doc) return 0;
+    return doc.questions.filter((q) => isAnswerComplete(q, answers[q.id])).length;
+  }, [doc, answers]);
   const progressPct = total > 0 ? Math.round((filled / total) * 100) : 0;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    router.push("/analysis");
+    if (!doc || filled !== total) return;
+    setSubmitting(true);
+    try {
+      const base = getApiBaseUrl().replace(/\/$/, "");
+      const res = await fetch(
+        `${base}/api/v1/questionnaires/${doc.id}/submissions`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(answers),
+        },
+      );
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text || `HTTP ${res.status}`);
+      }
+      const payload = (await res.json()) as {
+        submission_id: string;
+        analysis: unknown;
+      };
+      sessionStorage.setItem("dentnav_submission_id", payload.submission_id);
+      sessionStorage.setItem("dentnav_analysis", JSON.stringify(payload.analysis));
+      router.push(`/analysis?submission=${payload.submission_id}`);
+    } catch {
+      alert(
+        "Could not submit your answers. Ensure the API is running (see backend README) and try again.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -54,7 +108,7 @@ export function QuestionnaireView() {
               href="/auth/login"
               className="text-xs font-semibold leading-[18px] text-slate-500 transition-colors hover:text-slate-700"
             >
-              Logout
+              Log in
             </Link>
             <Link
               href="/"
@@ -73,6 +127,16 @@ export function QuestionnaireView() {
       </nav>
 
       <main className="z-0 mt-[51px] flex w-full flex-none flex-col items-center self-stretch bg-slate-50 px-5 pb-12 pt-16">
+        {loadError && (
+          <p className="mb-4 max-w-3xl text-center text-sm text-red-600" role="alert">
+            {loadError}
+          </p>
+        )}
+        {!doc ? (
+          <div className="flex min-h-[40vh] items-center justify-center text-sm text-slate-500">
+            Loading questionnaire…
+          </div>
+        ) : (
         <form
           className="isolate flex w-full max-w-3xl flex-col items-start gap-4 rounded-3xl border border-sky-500/10 bg-white/90 p-7 shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)] backdrop-blur-sm"
           onSubmit={handleSubmit}
@@ -87,7 +151,19 @@ export function QuestionnaireView() {
           </div>
 
           {doc.questions.map((q) => (
-            <QuestionnaireField key={q.id} question={q} value={answers[q.id]} onChange={setAnswer} />
+            <QuestionnaireField
+              key={q.id}
+              question={q}
+              value={answers[q.id]}
+              onChange={setAnswer}
+              fieldError={
+                q.id === Q1_ID
+                  ? validateQ1DegreeBackground(
+                      typeof answers[Q1_ID] === "string" ? answers[Q1_ID] : "",
+                    )
+                  : undefined
+              }
+            />
           ))}
 
           <div className="flex w-full flex-col items-center gap-4 border-t border-slate-50 pt-4">
@@ -105,12 +181,14 @@ export function QuestionnaireView() {
             </div>
             <button
               type="submit"
-              className="flex h-12 w-full max-w-sm cursor-pointer items-center justify-center rounded-full border-0 bg-sky-500 text-base font-extrabold text-white shadow-[0_10px_15px_-3px_rgba(14,165,233,0.2),0_4px_6px_-4px_rgba(14,165,233,0.2)] transition-all hover:bg-sky-600 active:scale-[0.98]"
+              disabled={submitting || filled !== total}
+              className="flex h-12 w-full max-w-sm cursor-pointer items-center justify-center rounded-full border-0 bg-sky-500 text-base font-extrabold text-white shadow-[0_10px_15px_-3px_rgba(14,165,233,0.2),0_4px_6px_-4px_rgba(14,165,233,0.2)] transition-all hover:bg-sky-600 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
             >
-              See My Results
+              {submitting ? "Submitting…" : "See My Results"}
             </button>
           </div>
         </form>
+        )}
 
         <div className="mt-0 flex w-full max-w-3xl flex-col items-center gap-5 border-t border-[#eef2f6] pt-6">
           <p className="w-full max-w-[640px] text-center text-xs font-medium leading-relaxed text-slate-500">
