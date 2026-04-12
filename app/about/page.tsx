@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import LineWaves from "@/components/about/LineWaves";
 import { Footer } from "@/components/landing/Footer";
 import { NavBar } from "@/components/landing/NavBar";
 
@@ -97,32 +96,8 @@ export default function AboutPage() {
       <NavBar />
 
       <main className="flex-1">
-        <section
-          className="relative min-h-[min(72vh,760px)] overflow-hidden border-b border-sky-200/80 bg-sky-50"
-          data-line-waves-bounds=""
-        >
-          <div className="absolute inset-0 z-0 min-h-[280px]">
-            <LineWaves
-              speed={0.3}
-              innerLineCount={32}
-              outerLineCount={36}
-              warpIntensity={1}
-              rotation={-45}
-              edgeFadeWidth={0}
-              colorCycleSpeed={1}
-              brightness={0.22}
-              color1="#7dd3fc"
-              color2="#0ea5e9"
-              color3="#ffffff"
-              enableMouseInteraction
-              mouseInfluence={8}
-            />
-          </div>
-          <div
-            className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-white/92 via-sky-50/80 to-sky-100/95"
-            aria-hidden
-          />
-          <div className="page-shell relative z-10 py-20 sm:py-24">
+        <section className="relative min-h-[min(72vh,760px)] border-b bg-gradient-to-b from-white via-sky-50 to-sky-50 border-sky-100/80">
+          <div className="page-shell py-20 sm:py-24">
             <div className="mx-auto flex max-w-[980px] flex-col gap-6 text-center">
               <span className="mx-auto inline-flex rounded-full border border-[#BAE6FD] bg-[#F0F9FF] px-4 py-1.5 text-xs font-bold uppercase tracking-[1.2px] text-[#0369A1]">
                 About DentNav

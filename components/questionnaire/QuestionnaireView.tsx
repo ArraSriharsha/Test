@@ -86,10 +86,11 @@ export function QuestionnaireView() {
     return doc.questions.filter((q) => isAnswerComplete(q, answers[q.id], answers)).length;
   }, [doc, answers]);
   const progressPct = total > 0 ? Math.round((filled / total) * 100) : 0;
+  const formComplete = total > 0 && filled === total;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (submitting) return;
+    if (!formComplete || submitting) return;
     setSubmitting(true);
     const handoffId = crypto.randomUUID();
     try {
@@ -178,9 +179,17 @@ export function QuestionnaireView() {
             </div>
             <button
               type="submit"
-              disabled={submitting}
+              disabled={submitting || !formComplete}
               aria-busy={submitting}
-              className="flex h-12 w-full max-w-sm cursor-pointer items-center justify-center gap-2 rounded-full border-0 bg-sky-500 text-base font-extrabold text-white shadow-[0_10px_15px_-3px_rgba(14,165,233,0.2),0_4px_6px_-4px_rgba(14,165,233,0.2)] transition-all hover:bg-sky-600 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-75"
+              aria-disabled={submitting || !formComplete}
+              title={!formComplete ? "Answer all questions to continue" : undefined}
+              className={
+                formComplete && !submitting
+                  ? "flex h-12 w-full max-w-sm cursor-pointer items-center justify-center gap-2 rounded-full border-0 bg-sky-500 text-base font-extrabold text-white shadow-[0_10px_15px_-3px_rgba(14,165,233,0.2),0_4px_6px_-4px_rgba(14,165,233,0.2)] transition-all hover:bg-sky-600 active:scale-[0.98]"
+                  : submitting
+                    ? "pointer-events-none flex h-12 w-full max-w-sm cursor-wait items-center justify-center gap-2 rounded-full border-0 bg-sky-500 text-base font-extrabold text-white opacity-90 shadow-[0_10px_15px_-3px_rgba(14,165,233,0.2),0_4px_6px_-4px_rgba(14,165,233,0.2)] transition-all"
+                    : "flex h-12 w-full max-w-sm cursor-not-allowed items-center justify-center gap-2 rounded-full border border-slate-300/40 bg-slate-50 text-base font-extrabold text-slate-400 shadow-none transition-all hover:bg-slate-50"
+              }
             >
               {submitting ? (
                 <svg
