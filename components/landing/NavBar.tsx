@@ -1,4 +1,5 @@
 import { BrandLogo } from "./BrandLogo";
+import { ServicesNavLink } from "./ServicesNavLink";
 import Link from "next/link";
 
 export function NavBar() {
@@ -19,6 +20,7 @@ export function NavBar() {
           >
             About Us
           </Link>
+          <ServicesNavLink />
           <Link
             href="/auth/login"
             className="text-center text-sm font-medium leading-5 text-[#3E4850] transition-colors hover:text-dent-ink"

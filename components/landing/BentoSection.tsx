@@ -20,9 +20,19 @@ function IconTile({
   );
 }
 
+/** Shared card lift on hover (light surfaces). */
+const bentoShadowSm = "shadow-[0_1px_2px_rgba(0,0,0,0.05)]";
+const bentoHoverLift = "transition-all duration-200 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)]";
+/** Dark gradient cards: stronger elevation on hover. */
+const bentoHoverLiftDark =
+  "transition-all duration-200 hover:shadow-[0_28px_45px_-10px_rgba(0,0,0,0.55),0_14px_22px_-8px_rgba(0,0,0,0.4)]";
+
 export function BentoSection() {
   return (
-    <section className="bg-dent-surface-bento py-24">
+    <section
+      id="services"
+      className="scroll-mt-[80px] bg-dent-surface-bento py-24"
+    >
       <div className="page-shell flex flex-col gap-16">
         <div className="flex flex-col gap-4">
           <p className="font-display text-xs font-extrabold uppercase leading-4 tracking-[2.4px] text-dent-sky">
@@ -33,31 +43,32 @@ export function BentoSection() {
           </h2>
         </div>
 
-        {/* Figma: 1344px content, 3 equal cols (432px) with 24px gaps, Cell A spans 2 */}
+        {/* 3 equal cols on lg; Application Mastery + Introductory Consultation share row1 */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {/* Cell A — Application Mastery (spans 2 cols) */}
-          <article className="flex min-h-[312px] flex-col justify-between rounded-3xl border border-transparent border-t-4 border-t-dent-sky bg-white p-10 shadow-[0_1px_2px_rgba(0,0,0,0.05)] lg:col-span-2">
+          {/* Cell A — Application Mastery */}
+          <article
+            className={`flex flex-col justify-between rounded-3xl border border-transparent border-t-4 border-t-dent-sky bg-white p-8 ${bentoShadowSm} ${bentoHoverLift}`}
+          >
             <div>
-              <IconTile className="bg-dent-sky/10" size="lg">
-                <svg className="h-6 w-6 text-dent-sky" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <IconTile className="bg-dent-sky/10" size="md">
+                <svg className="h-5 w-5 text-dent-sky" viewBox="0 0 24 24" fill="none" aria-hidden>
                   <rect x="6" y="3" width="12" height="18" rx="1.5" stroke="currentColor" strokeWidth="1.8" />
                   <path d="M9 8h6M9 12h4M9 16h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                   <path d="M14 2l4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
                 </svg>
               </IconTile>
-              <h3 className="text-2xl font-medium leading-8 text-dent-ink">
+              <h3 className="text-xl font-medium leading-7 text-dent-ink">
                 Application Mastery
               </h3>
-              <p className="mt-2 max-w-[512px] text-base font-normal leading-6 text-[#475569]">
-                Strategic guidance for every part of your application to
-                ensure you stand out from the competition.
+              <p className="mt-2 text-sm font-normal leading-5 text-[#475569]">
+                Strategic guidance for every part of your application so you stand out from the competition.
               </p>
             </div>
-            <div className="mt-8 flex flex-wrap gap-3">
-              {["CAAPID", "SOP", "CV", "INTERVIEW PREP", "ECE", "WES"].map((t) => (
+            <div className="mt-5 flex flex-wrap gap-3">
+              {["PASS", "CAAPID", "SOP", "CV", "ECE", "INTERVIEW PREP", "WES"].map((t) => (
                 <span
                   key={t}
-                  className="rounded-full bg-dent-badge-bg px-4 py-1.5 text-xs font-bold leading-4 text-dent-deep"
+                  className="rounded-full bg-dent-badge-bg px-3 py-1 text-[11px] font-bold leading-4 tracking-[0.3px] text-dent-deep"
                 >
                   {t}
                 </span>
@@ -65,8 +76,44 @@ export function BentoSection() {
             </div>
           </article>
 
-          {/* Cell B — We've Been in Your Shoes */}
-          <article className="flex min-h-[312px] flex-col rounded-3xl border border-[rgba(14,165,233,0.1)] bg-dent-badge-bg px-8 pb-8 pt-8">
+          {/* Cell B — Introductory Consultation */}
+          <article
+            className={`flex flex-col rounded-3xl border border-[#F1F5F9] bg-white p-8 ${bentoShadowSm} ${bentoHoverLift}`}
+          >
+            <IconTile className="bg-dent-sky/10" size="md">
+              <svg className="h-5 w-5 text-dent-sky" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <rect x="3" y="6" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="1.8" />
+                <path
+                  d="M17 9l4 2.5v5L17 19v-10z"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </IconTile>
+            <h3 className="text-xl font-medium leading-7 text-dent-ink">Introductory Consultation</h3>
+            <p className="mt-2 text-sm font-normal leading-5 text-[#64748B]">
+              A focused <span className="font-semibold text-dent-ink/90">30-minute video session</span> to understand your
+              situation and set you on the right path.
+            </p>
+            <ul className="mt-4 space-y-2.5 text-sm leading-snug text-[#475569]">
+              {[
+                "Gain clarity on your current position",
+                "Discuss your goals and future vision",
+                "Walk away with a tailored roadmap for your next steps",
+              ].map((item) => (
+                <li key={item} className="flex gap-2">
+                  <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-dent-sky" aria-hidden />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+
+          {/* Cell C — We've Been in Your Shoes */}
+          <article
+            className={`flex min-h-[312px] flex-col rounded-3xl border border-[rgba(14,165,233,0.1)] bg-dent-badge-bg px-8 pb-8 pt-8 ${bentoShadowSm} ${bentoHoverLift}`}
+          >
             <IconTile className="bg-white shadow-[0_1px_2px_rgba(0,0,0,0.05)]" size="md">
               <svg className="h-5 w-5 text-dent-deep" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -106,8 +153,10 @@ export function BentoSection() {
             </p>
           </article>
 
-          {/* Cell C — Explore Various Pathways */}
-          <article className="flex min-h-[227px] flex-col justify-between rounded-3xl border border-[#F1F5F9] bg-white p-8 shadow-[0_1px_2px_rgba(0,0,0,0.05)] transition-all hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+          {/* Explore Various Pathways */}
+          <article
+            className={`flex min-h-[227px] flex-col justify-between rounded-3xl border border-[#F1F5F9] bg-white p-8 ${bentoShadowSm} ${bentoHoverLift}`}
+          >
             <div>
               <IconTile className="bg-dent-badge-bg" size="md">
                 <svg className="h-5 w-5 text-dent-deep" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -140,8 +189,10 @@ export function BentoSection() {
             </div>
           </article>
 
-          {/* Cell D — Visa & Immigration */}
-          <article className="flex min-h-[223px] flex-col justify-between rounded-3xl border border-[#F1F5F9] bg-white p-8 shadow-[0_1px_2px_rgba(0,0,0,0.05)] transition-all hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+          {/* Visa & Immigration */}
+          <article
+            className={`flex min-h-[223px] flex-col justify-between rounded-3xl border border-[#F1F5F9] bg-white p-8 ${bentoShadowSm} ${bentoHoverLift}`}
+          >
             <div>
               <IconTile className="bg-dent-badge-bg" size="md">
                 <svg className="h-5 w-5 text-dent-deep" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -175,8 +226,10 @@ export function BentoSection() {
             </div>
           </article>
 
-          {/* Cell E — Bench Test Training */}
-          <article className="relative isolate flex min-h-[270px] flex-col justify-between rounded-3xl bg-gradient-to-br from-dent-ink from-0% to-[#1E293B] to-100% p-8 shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)]">
+          {/* Bench Test Training */}
+          <article
+            className={`relative isolate flex min-h-[270px] flex-col justify-between rounded-3xl bg-gradient-to-br from-dent-ink from-0% to-[#1E293B] to-100% p-8 shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)] ${bentoHoverLiftDark}`}
+          >
             <div>
               <IconTile className="bg-white/10 backdrop-blur-md" size="md">
                 <svg className="h-[22px] w-[22px] text-white" viewBox="0 0 24 24" fill="none" aria-hidden>
