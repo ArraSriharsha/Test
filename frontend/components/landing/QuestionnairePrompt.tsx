@@ -46,12 +46,6 @@ export function QuestionnairePrompt() {
           <path d="M3.33 8h9.34M8.67 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </Link>
-      <Link
-        href="/landing/packages"
-        className="inline-flex items-center justify-center rounded-full border border-[#E2E8F0] bg-white/90 px-6 py-3.5 text-sm font-semibold text-dent-ink shadow-sm transition-all hover:border-dent-sky/35 hover:bg-dent-badge-bg/40"
-      >
-        Preview packages
-      </Link>
     </LandingPromptCard>
   );
 }

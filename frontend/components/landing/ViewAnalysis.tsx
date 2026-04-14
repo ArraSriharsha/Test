@@ -45,12 +45,6 @@ export function ViewAnalysis() {
           <path d="M3.33 8h9.34M8.67 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </Link>
-      <Link
-        href="/landing/packages"
-        className="inline-flex items-center justify-center rounded-full border border-transparent px-6 py-3.5 text-sm font-semibold text-dent-deep underline-offset-4 hover:underline"
-      >
-        Manage package
-      </Link>
     </LandingPromptCard>
   );
 }
