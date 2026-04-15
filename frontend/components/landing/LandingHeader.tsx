@@ -9,12 +9,20 @@ export function LandingHeader() {
       <div className="page-shell flex h-[var(--landing-header-h)] items-center justify-between gap-4">
         <BrandLogo href="/landing" compact iconSize={32} />
 
-        <Link
-          href="/"
-          className="shrink-0 rounded-xl px-3 py-2 text-sm font-medium text-[#3E4850] transition-colors duration-200 hover:bg-slate-50 hover:text-dent-ink"
-        >
-          Sign out
-        </Link>
+        <nav className="flex items-center gap-1 sm:gap-2" aria-label="Account">
+          <Link
+            href="/landing/about"
+            className="shrink-0 rounded-xl px-3 py-2 text-sm font-medium text-[#3E4850] transition-colors duration-200 hover:bg-slate-50 hover:text-dent-ink"
+          >
+            About Us
+          </Link>
+          <Link
+            href="/"
+            className="shrink-0 rounded-xl px-3 py-2 text-sm font-medium text-[#3E4850] transition-colors duration-200 hover:bg-slate-50 hover:text-dent-ink"
+          >
+            Sign out
+          </Link>
+        </nav>
       </div>
     </header>
   );
