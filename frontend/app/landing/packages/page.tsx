@@ -188,7 +188,7 @@ const consultPackages: ConsultPackage[] = [
   {
     category: "Immigration",
     title: "Visa Guidance",
-    duration: "60 min",
+    duration: "30 min",
     sessions: "1 session",
     format: "Live video",
     description:
@@ -212,14 +212,14 @@ const consultPackages: ConsultPackage[] = [
   {
     category: "Career",
     title: "Interview Preparation",
-    duration: "30 min × 2",
-    sessions: "2 sessions",
+    duration: "30 min",
+    sessions: "1 session",
     format: "Live mock interviews",
     description:
       "Build the skills, confidence, and clarity to make a lasting impression in any dental residency, AEGD, or clinical interview.",
     features: [
-      "Two personalised mock interview sessions",
-      "Sessions aligned with your specific career goals and target programmes",
+      "Personalised mock interview session",
+      "Aligned with your specific career goals and target programmes",
       "In-depth feedback on strengths and areas to improve",
       "Practical, actionable strategies to help you stand out",
       "Techniques to handle unexpected or challenging questions",
@@ -236,16 +236,16 @@ const consultPackages: ConsultPackage[] = [
   {
     category: "Application",
     title: "CV & SoP Preparation",
-    duration: "30 min × 2",
-    sessions: "2 sessions + docs",
-    format: "Video sessions. Documents",
+    duration: "30 min",
+    sessions: "1 session",
+    format: "Video session. Documents",
     description:
       "Transform your credentials into a compelling narrative that stands out to admissions committees and employers — with expert support at every step.",
     features: [
-      "Two one-on-one sessions to deeply understand your journey and goals",
+      "One-on-one session to deeply understand your journey and goals",
       "Professionally structured CV that highlights your achievements",
       "Statement of Purpose that reflects your story and strengths",
-      "First draft delivered within 48 hours of your sessions",
+      "First draft delivered within 48 hours of your session",
       "Up to three complimentary revision rounds included",
     ],
     outcome:
@@ -260,8 +260,8 @@ const consultPackages: ConsultPackage[] = [
   {
     category: "Applications",
     title: "ADEA CAAPID & PASS Guidance",
-    duration: "30 min × 2",
-    sessions: "2 sessions",
+    duration: "30 min",
+    sessions: "1 session",
     format: "Live video",
     description:
       "Navigate the most complex dental program applications with a clear, personalised strategy built around your unique profile and goals.",
@@ -284,8 +284,8 @@ const consultPackages: ConsultPackage[] = [
   {
     category: "Licensing",
     title: "State License Guidance",
-    duration: "Personalised",
-    sessions: "1+ sessions",
+    duration: "30 min",
+    sessions: "1 session",
     format: "Video · state-specific",
     description:
       "Demystify state licensure as a foreign-trained dentist — with experience-driven guidance that goes beyond what you'll find in official documentation.",
