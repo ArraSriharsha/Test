@@ -30,7 +30,7 @@ const founders: Founder[] = [
     story: [
       "Raised in a small town in Andhra Pradesh, India, he studied in Telugu-medium schools where English was a challenge, then pursued dentistry in a government college with limited clinical exposure and infrastructure.",
       "When he moved toward a U.S. pathway, he faced uncertainty around visas, pathways, eligibility, and finances, alongside academic setbacks including failure during BDS.",
-      "Through persistence, self-learning, and strategic decisions, he built a successful U.S. path without pursuing a traditional DDS program.",
+      "Through persistence, self-learning, and strategic decisions, he built a successful U.S. path pursuing AEGD program.",
     ],
     obstacles: [
       "Language barriers and pressure to score high on TOEFL",
@@ -39,7 +39,7 @@ const founders: Founder[] = [
       "Academic setbacks and misinformation at critical decision points",
     ],
     outcomes: [
-      "Earned recognition equivalent to DDS/DMD",
+      "Graduated from world's first dental school",
       "Obtained dental licenses in California, Virginia, and Washington",
       "Practiced successfully as a general dentist in the U.S. for 7+ years",
     ],

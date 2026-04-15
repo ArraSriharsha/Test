@@ -22,7 +22,7 @@ import { ViewAnalysis } from "@/components/landing/ViewAnalysis";
  * ─────────────────────────────────────────────────────────────────────
  */
 const HAS_ANSWERED_QUESTIONNAIRE = true; // ← change to true after questionnaire
-const HAS_PAID = false; // ← change to true after payment
+const HAS_PAID = true; // ← change to true after payment
 
 function LandingHero() {
   return (
