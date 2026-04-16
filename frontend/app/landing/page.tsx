@@ -1,4 +1,4 @@
-import { LandingHeroAside } from "@/components/landing/LandingHeroAside";
+import { BrochureDownload } from "@/components/landing/BrochureDownload";
 import { LandingVideoSection } from "@/components/landing/LandingVideoSection";
 import { PaymentPrompt } from "@/components/landing/PaymentPrompt";
 import { QuestionnairePrompt } from "@/components/landing/QuestionnairePrompt";
@@ -38,7 +38,7 @@ function LandingHero() {
             live.
           </p>
         </div>
-        <LandingHeroAside />
+        <BrochureDownload />
       </div>
 
       <div className="mt-10 grid gap-4 sm:grid-cols-3">
