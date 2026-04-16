@@ -11,7 +11,7 @@ const navItems = [
     inactiveClass:
       "border border-[#E2E8F0]/90 bg-white text-dent-deep hover:border-dent-sky/25 hover:bg-dent-surface-bento",
     activeClass:
-      "border border-dent-deep/20 bg-dent-deep text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)]",
+      "border border-dent-ink/30 bg-dent-ink text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)]",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className="h-3.5 w-3.5 opacity-90" aria-hidden>
         <path
@@ -31,7 +31,7 @@ const navItems = [
     inactiveClass:
       "border border-[#E2E8F0]/90 bg-white text-dent-ink hover:border-dent-sky/30 hover:bg-dent-badge-bg/60",
     activeClass:
-      "border border-dent-sky/30 bg-dent-deep text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.15)]",
+      "border border-dent-ink/30 bg-dent-ink text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.15)]",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className="h-3.5 w-3.5 opacity-90" aria-hidden>
         <path
@@ -58,7 +58,7 @@ const navItems = [
     inactiveClass:
       "border border-[#E2E8F0]/90 bg-white text-dent-ink hover:border-dent-sky/30 hover:bg-dent-badge-bg/60",
     activeClass:
-      "border border-dent-sky/30 bg-dent-deep text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.15)]",
+      "border border-dent-ink/30 bg-dent-ink text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.15)]",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className="h-3.5 w-3.5 opacity-90" aria-hidden>
         <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />

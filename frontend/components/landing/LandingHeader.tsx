@@ -10,12 +10,11 @@ export function LandingHeader() {
         <BrandLogo href="/landing" compact iconSize={32} />
 
         <nav className="flex items-center gap-1 sm:gap-2" aria-label="Account">
-          <Link
-            href="/landing/about"
+          <button
             className="shrink-0 rounded-xl px-3 py-2 text-sm font-medium text-[#3E4850] transition-colors duration-200 hover:bg-slate-50 hover:text-dent-ink"
           >
-            About Us
-          </Link>
+            Contact Us
+          </button>
           <Link
             href="/"
             className="shrink-0 rounded-xl px-3 py-2 text-sm font-medium text-[#3E4850] transition-colors duration-200 hover:bg-slate-50 hover:text-dent-ink"
