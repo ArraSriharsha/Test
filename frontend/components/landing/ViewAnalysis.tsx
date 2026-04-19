@@ -17,7 +17,7 @@ export function ViewAnalysis() {
         "Notes on common bottlenecks and how to avoid them",
         "Export-friendly structure for your records (coming soon)",
       ]}
-      gradientClassName="bg-gradient-to-br from-white via-dent-badge-bg/40 to-white"
+      gradientClassName="bg-linear-to-br from-white via-dent-badge-bg/40 to-white"
       iconBadgeClassName="bg-sky-50 text-dent-deep ring-sky-100"
       icon={
         <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden>

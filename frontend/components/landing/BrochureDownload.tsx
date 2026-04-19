@@ -5,13 +5,13 @@
 export function BrochureDownload() {
   return (
     <div
-      className="relative isolate mx-auto hidden w-full max-w-[20.5rem] rounded-2xl border border-[#E2E8F0]/90 bg-[#F8FAFC] p-4 shadow-[0_16px_40px_-24px_rgba(12,26,58,0.16)] md:block md:shrink-0 lg:mx-0 lg:max-w-[19rem]"
+      className="relative isolate hidden w-full rounded-2xl border border-[#E2E8F0]/90 bg-[#F8FAFC] p-4 shadow-[0_16px_40px_-24px_rgba(12,26,58,0.16)] md:flex md:w-56 md:shrink-0 md:flex-col lg:mx-0 lg:w-64"
       aria-label="Download DentNav brochure"
     >
       {/* Subtle radial highlight */}
       <div className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(100%_120%_at_100%_0%,rgba(14,165,233,0.06),transparent_50%)]" />
 
-      <div className="relative z-[1] flex flex-col gap-3">
+      <div className="relative z-[1] flex flex-1 flex-col gap-3">
         {/* Header row */}
         <div className="flex items-start justify-between gap-2">
           <div>
@@ -42,7 +42,7 @@ export function BrochureDownload() {
         </div>
 
         {/* What's inside */}
-        <ul className="space-y-1.5 px-0.5">
+        <ul className="flex-1 space-y-1.5 px-0.5">
           {[
             "Pathways for foreign-trained dentists",
             "Exam timelines & state licensing",
@@ -67,7 +67,7 @@ export function BrochureDownload() {
             <path d="M8 2v8M4.5 6.5L8 10l3.5-3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             <path d="M2.5 12.5h11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
           </svg>
-          Download Free Brochure
+          Download Free Monograph
         </a>
       </div>
     </div>

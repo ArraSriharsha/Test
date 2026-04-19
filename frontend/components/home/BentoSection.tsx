@@ -38,7 +38,7 @@ export function BentoSection() {
           <p className="font-display text-xs font-extrabold uppercase leading-4 tracking-[2.4px] text-dent-sky">
             What we help with
           </p>
-          <h2 className="font-display text-balance text-4xl font-extrabold leading-none tracking-[-1.2px] text-dent-ink lg:text-5xl lg:leading-[48px]">
+          <h2 className="text-shimmer font-display text-balance pb-2 text-4xl font-extrabold leading-tight tracking-[-1.2px] lg:text-5xl lg:leading-14">
             Everything You Need, In One Place
           </h2>
         </div>

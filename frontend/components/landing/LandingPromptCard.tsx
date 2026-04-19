@@ -30,11 +30,11 @@ export function LandingPromptCard({
       <div className={`grid lg:grid-cols-[1fr_minmax(0,22rem)] ${gradientClassName}`}>
 
         {/* Left — headline + CTA */}
-        <div className="flex flex-col justify-between px-8 py-10 sm:px-12 sm:py-12">
+        <div className="flex flex-col justify-between px-6 py-7 sm:px-8 sm:py-8">
           <div>
             <div className="flex items-center gap-3">
               <span
-                className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ring-1 ${iconBadgeClassName}`}
+                className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-xl ring-1 ${iconBadgeClassName}`}
                 aria-hidden
               >
                 {icon}
@@ -42,19 +42,19 @@ export function LandingPromptCard({
               <p className={`text-[11px] font-bold uppercase tracking-[0.2em] ${eyebrowClassName}`}>{eyebrow}</p>
             </div>
 
-            <h2 className="mt-5 font-display text-2xl font-bold tracking-tight text-dent-ink sm:text-[1.75rem] lg:leading-tight">
+            <h2 className="mt-3 font-display text-xl font-bold tracking-tight text-dent-ink sm:text-2xl lg:leading-tight">
               {title}
             </h2>
-            <p className="mt-3 max-w-lg text-[15px] leading-relaxed text-[#64748B]">{description}</p>
+            <p className="mt-2 text-sm leading-relaxed text-[#64748B]">{description}</p>
           </div>
 
-          <div className="mt-8">{children}</div>
+          <div className="mt-5">{children}</div>
         </div>
 
         {/* Right — feature list */}
-        <div className="flex flex-col justify-center border-t border-[#E2E8F0] bg-[#F8FAFC]/70 px-8 py-10 sm:px-10 lg:border-l lg:border-t-0">
+        <div className="flex flex-col justify-center border-t border-[#E2E8F0] bg-[#F8FAFC]/70 px-6 py-7 sm:px-8 lg:border-l lg:border-t-0">
           <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#94A3B8]">{featuresTitle}</p>
-          <ul className="mt-5 space-y-4">
+          <ul className="mt-4 space-y-3">
             {features.map((line) => (
               <li key={line} className="flex gap-3 text-sm leading-snug text-[#475569]">
                 <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-dent-badge-bg text-dent-deep ring-1 ring-dent-sky/15">

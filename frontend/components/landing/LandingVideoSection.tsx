@@ -19,7 +19,7 @@ export function LandingVideoSection() {
 
   return (
     <section
-      className="mt-16 w-full scroll-mt-8 border-t border-[#E2E8F0]/80 pt-14 sm:mt-20 sm:pt-16"
+      className="mt-8 w-full scroll-mt-8 border-t border-[#E2E8F0]/80 pt-10 sm:mt-10 sm:pt-12"
       aria-labelledby="landing-video-heading"
     >
       {/* Dark card wraps the whole section */}

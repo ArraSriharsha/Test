@@ -17,8 +17,8 @@ export function QuestionnairePrompt() {
         "You’ll see which exams and documents typically come next for your case",
         "Your answers power the personalised analysis unlocked with a package",
       ]}
-      gradientClassName="bg-gradient-to-br from-white via-white to-dent-badge-bg/45"
-      iconBadgeClassName="bg-amber-50 text-amber-700 ring-amber-100"
+      gradientClassName="bg-linear-to-br from-white via-white to-dent-badge-bg/45"
+      iconBadgeClassName="bg-sky-50 text-dent-deep ring-sky-100"
       icon={
         <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden>
           <path
@@ -34,7 +34,7 @@ export function QuestionnairePrompt() {
     >
       <Link
         href="/questionnaire"
-        className="group inline-flex items-center gap-2.5 rounded-full bg-dent-sky px-8 py-3.5 text-sm font-bold text-white shadow-[0_1px_2px_rgba(0,0,0,0.05)] transition-all duration-200 hover:opacity-95 active:scale-[0.98]"
+        className="group inline-flex items-center gap-2.5 rounded-full border border-[#E2E8F0] bg-white px-8 py-3.5 text-sm font-bold text-dent-ink shadow-[0_1px_2px_rgba(0,0,0,0.05)] transition-all duration-200 hover:border-dent-sky/40 hover:bg-dent-badge-bg/50 active:scale-[0.98]"
       >
         <span>Start questionnaire</span>
         <svg

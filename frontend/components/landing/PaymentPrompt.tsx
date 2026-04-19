@@ -8,7 +8,7 @@ export function PaymentPrompt() {
   return (
     <LandingPromptCard
       eyebrow="Questionnaire complete"
-      eyebrowClassName="text-emerald-800"
+      eyebrowClassName="text-dent-deep"
       title="Unlock your full pathway analysis"
       description="We’ve used your responses to build a tailored roadmap: recommended exams, sequencing, and practical next steps. Choose a package to open the full analysis and keep everything in one place."
       featuresTitle="Included with access"
@@ -17,8 +17,8 @@ export function PaymentPrompt() {
         "Clear next actions for licensing and credential evaluation",
         "Guidance you can revisit as your situation changes",
       ]}
-      gradientClassName="bg-gradient-to-br from-white via-white to-emerald-50/35"
-      iconBadgeClassName="bg-emerald-50 text-emerald-700 ring-emerald-100"
+      gradientClassName="bg-linear-to-br from-white via-white to-emerald-50/35"
+      iconBadgeClassName="bg-sky-50 text-dent-deep ring-sky-100"
       icon={
         <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden>
           <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

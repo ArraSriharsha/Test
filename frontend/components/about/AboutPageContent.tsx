@@ -11,10 +11,11 @@ type Founder = {
   photoAlt: string;
   intro: string;
   story: string[];
-  obstacles?: string[];
+
   outcomes: string[];
   focus: string[];
   quote: string;
+  instagram?: string;
 };
 
 const founders: Founder[] = [
@@ -32,12 +33,6 @@ const founders: Founder[] = [
       "When he moved toward a U.S. pathway, he faced uncertainty around visas, pathways, eligibility, and finances, alongside academic setbacks including failure during BDS.",
       "Through persistence, self-learning, and strategic decisions, he built a successful U.S. path pursuing AEGD program.",
     ],
-    obstacles: [
-      "Language barriers and pressure to score high on TOEFL",
-      "Lack of clarity on visas, pathways, and eligibility",
-      "Financial uncertainty and myths around very high costs",
-      "Academic setbacks and misinformation at critical decision points",
-    ],
     outcomes: [
       "Graduated from world's first dental school",
       "Obtained dental licenses in California, Virginia, and Washington",
@@ -51,6 +46,7 @@ const founders: Founder[] = [
     ],
     quote:
       "Whether you are in your 20s, 30s, 40s, or even 50s, it is not too late. The only mistake is not starting with the right guidance.",
+    instagram: "https://www.instagram.com/dr.rudravaram/",
   },
   {
     name: "Dr. Anuja Singaraju",
@@ -80,6 +76,7 @@ const founders: Founder[] = [
     ],
     quote:
       "It is not about choosing the most popular path. It is about choosing the right path for you.",
+    instagram: "https://www.instagram.com/dr.anuja.singaraju/",
   },
 ];
 
@@ -218,6 +215,19 @@ export function AboutPageContent({ secondaryCta }: AboutPageContentProps) {
                     <p className="mt-1 text-sm font-medium text-[#64748B]">
                       {founder.profile}
                     </p>
+                    {founder.instagram && (
+                      <a
+                        href={founder.instagram}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-[#C13584] transition-opacity hover:opacity-75"
+                      >
+                        <svg viewBox="0 0 24 24" fill="currentColor" className="h-3.5 w-3.5" aria-hidden>
+                          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                        </svg>
+                        Instagram
+                      </a>
+                    )}
                   </div>
                 </div>
 
@@ -236,27 +246,6 @@ export function AboutPageContent({ secondaryCta }: AboutPageContentProps) {
                       </p>
                     ))}
                   </div>
-
-                  {founder.obstacles && founder.obstacles.length > 0 ? (
-                    <details className="mt-6 rounded-2xl border border-[#FDE68A] bg-[#FFFBEB] p-5 open:border-[#FACC15] open:shadow-[0_14px_32px_-24px_rgba(146,64,14,0.4)]">
-                      <summary className="cursor-pointer list-none">
-                        <h4 className="flex items-center justify-between text-sm font-bold uppercase tracking-[0.9px] text-[#92400E]">
-                          Challenges Faced
-                          <span className="ml-3 text-[11px] font-semibold normal-case tracking-normal text-[#B45309]">
-                            Click to expand
-                          </span>
-                        </h4>
-                      </summary>
-                      <ul className="mt-3 space-y-2.5 text-sm font-medium leading-6 text-[#92400E]">
-                        {founder.obstacles.map((item) => (
-                          <li key={item} className="flex gap-2.5">
-                            <span aria-hidden>•</span>
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </details>
-                  ) : null}
 
                   <div className="mt-6 grid gap-5 sm:grid-cols-2">
                     <div className="rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC] p-5 transition-all duration-300 hover:border-[#BAE6FD] hover:bg-white hover:shadow-[0_16px_30px_-24px_rgba(15,23,42,0.35)]">
@@ -300,7 +289,7 @@ export function AboutPageContent({ secondaryCta }: AboutPageContentProps) {
       {/* Philosophy + CTA */}
       <section className="border-y border-[#E2E8F0] bg-white">
         <div className="page-shell py-16 sm:py-20">
-          <div className="mx-auto max-w-[920px] rounded-[28px] border border-[#E2E8F0] bg-gradient-to-b from-[#F8FBFF] to-sky-50 p-8 shadow-[0_24px_54px_-34px_rgba(14,116,144,0.25)] sm:p-12">
+          <div className="rounded-[28px] border border-[#E2E8F0] bg-linear-to-b from-[#F8FBFF] to-sky-50 p-8 shadow-[0_24px_54px_-34px_rgba(14,116,144,0.25)] sm:p-12">
             <h2 className="text-center font-display text-3xl font-extrabold tracking-[-0.7px] text-[#0C1A3A] sm:text-4xl">
               DentNav Philosophy
             </h2>

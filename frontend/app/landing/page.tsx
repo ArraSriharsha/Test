@@ -6,65 +6,62 @@ import { ViewAnalysis } from "@/components/landing/ViewAnalysis";
 
 /*
  * ─── Feature flags ───────────────────────────────────────────────────
- *
- * Change these to test different dashboard states:
- *
- *   HAS_ANSWERED_QUESTIONNAIRE
- *     • false → shows the "Answer questionnaire" prompt
- *     • true  → checks HAS_PAID next
- *
- *   HAS_PAID
- *     • false → shows the "Unlock your analysis / View packages" prompt
- *     • true  → shows the "View your analysis" card
- *
- * TODO: Replace with a real API call, e.g.:
- *   const { hasAnswered, hasPaid } = await getUserStatus();
+ * HAS_ANSWERED_QUESTIONNAIRE: false → questionnaire prompt
+ * HAS_PAID: false → payment prompt, true → view analysis
+ * TODO: Replace with a real API call.
  * ─────────────────────────────────────────────────────────────────────
  */
-const HAS_ANSWERED_QUESTIONNAIRE = true; // ← change to true after questionnaire
-const HAS_PAID = true; // ← change to true after payment
-
-function LandingHero() {
-  return (
-    <header className="mb-12 lg:mb-14">
-      <div className="flex flex-col gap-6 md:gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-8 xl:gap-10">
-        <div className="min-w-0 max-w-3xl flex-1">
-          <h1 className="font-display text-3xl font-bold tracking-tight text-dent-ink sm:text-4xl">
-            Welcome back
-          </h1>
-          <p className="mt-4 text-base leading-relaxed text-[#64748B] sm:text-[17px]">
-            Your DentNav workspace brings questionnaire, package access, and pathway analysis together.
-            Use the main panel to take your next step — then scroll for a quick video overview when it&apos;s
-            live.
-          </p>
-        </div>
-        <BrochureDownload />
-      </div>
-
-      <div className="mt-10 grid gap-4 sm:grid-cols-3">
-        <div className="rounded-2xl border border-[#E2E8F0] bg-white/80 p-5 shadow-sm backdrop-blur-sm">
-          <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#94A3B8]">Tailored</p>
-          <p className="mt-2 text-sm font-semibold leading-snug text-dent-ink">Guidance built on your answers</p>
-        </div>
-        <div className="rounded-2xl border border-[#E2E8F0] bg-white/80 p-5 shadow-sm backdrop-blur-sm">
-          <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#94A3B8]">Focused</p>
-          <p className="mt-2 text-sm font-semibold leading-snug text-dent-ink">Exams, docs, and sequencing</p>
-        </div>
-        <div className="rounded-2xl border border-[#E2E8F0] bg-white/80 p-5 shadow-sm backdrop-blur-sm">
-          <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#94A3B8]">One place</p>
-          <p className="mt-2 text-sm font-semibold leading-snug text-dent-ink">Pick up anytime, on any device</p>
-        </div>
-      </div>
-    </header>
-  );
-}
+const HAS_ANSWERED_QUESTIONNAIRE = true;
+const HAS_PAID = false;
 
 export default function LandingPage() {
   return (
     <div className="w-full max-w-6xl pb-6">
-      <LandingHero />
 
-      <div className="w-full min-h-[min(28rem,50vh)]">
+      {/* ── Hero ─────────────────────────────────────────────────────── */}
+      <header className="mb-5">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between lg:gap-6">
+          <div className="min-w-0 max-w-3xl flex-1">
+            <h1 className="font-display text-3xl font-bold tracking-tight text-dent-ink sm:text-4xl">
+              Welcome back
+            </h1>
+            <p className="mt-2 text-sm leading-relaxed text-[#64748B] sm:text-base">
+              Navigate U.S. dental licensing with a roadmap built entirely around your credentials, target states, and program type.
+            </p>
+
+            <div className="mt-4 grid gap-2 sm:grid-cols-3">
+              {[
+                { label: "Tailored",  body: "Guidance built on your answers" },
+                { label: "Focused",   body: "Exams, docs, and sequencing" },
+                { label: "One place", body: "Pick up anytime, on any device" },
+              ].map(({ label, body }) => (
+                <div key={label} className="rounded-xl border border-[#E2E8F0] bg-white/80 px-3 py-2.5 shadow-sm">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#94A3B8]">{label}</p>
+                  <p className="mt-0.5 text-xs font-semibold leading-snug text-dent-ink">{body}</p>
+                </div>
+              ))}
+            </div>
+
+            <p className="mt-3 text-[11px] leading-relaxed text-[#64748B]">
+              Your exam sequence, credential requirements, and all state-specific licensing rules — filtered to your profile, target states, and program type.
+            </p>
+            <p className="mt-1.5 text-[11px] leading-relaxed text-[#64748B]">
+              Open your roadmap anytime on any device, revisit it as your plans evolve, or bring it to a 1:1 consultation for expert guidance.
+            </p>
+
+            <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1">
+              <p className="text-sm font-bold text-shimmer">Mapped to your credentials.</p>
+              <p className="text-sm font-bold text-shimmer" style={{ animationDelay: "1.3s" }}>Built for your timeline.</p>
+              <p className="text-sm font-bold text-shimmer" style={{ animationDelay: "2.6s" }}>Yours to revisit, anytime.</p>
+              <p className="text-sm font-bold text-shimmer" style={{ animationDelay: "3.9s" }}>Every state rule, decoded.</p>
+            </div>
+          </div>
+          <BrochureDownload />
+        </div>
+      </header>
+
+      {/* ── Prompt card ──────────────────────────────────────────────── */}
+      <div className="w-full">
         {!HAS_ANSWERED_QUESTIONNAIRE ? (
           <QuestionnairePrompt />
         ) : !HAS_PAID ? (
